@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width,initial-scale=0.5,minimum-scale=0.5,maximum-scale=2.0,user-scalable=yes">
+		<title></title>
+		<style>
+			*
+			{
+				padding : 0;
+				margin : 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="editor" style="position:absolute">&lt;svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 1000 1000" fill-rule="evenodd"&gt;
+
+	&lt;rect fill="#000" width="100%" height="100%" /&gt;
+
+&lt;/svg&gt;</div>
+
+		<div id="preview" style="position:absolute">
+		</div>
+
+		<script src="ace.js"></script>
+		<script src="theme-monokai.js"></script>
+		<script src="mode-svg.js"></script>
+		<script>
+
+			var editor = document.getElementById( 'editor' );
+
+			var preview = document.getElementById( 'preview' );
+
+			var ace = ace.edit( 'editor' );
+			// editor.setTheme( 'ace/theme/solarized_dark' );
+			ace.setTheme( 'ace/theme/monokai' );
+			ace.getSession().setMode( 'ace/mode/svg' );
+
+			function change(){
+				var code = ace.getSession().getValue();
+				try{ preview.innerHTML = code; }catch( _e ){}
+			}
+
+			ace.getSession().on( 'change', change );
+
+			function resize(){
+				var W = window.innerWidth;
+				var H = window.innerHeight;
+
+				editor.style.width = W/2 + 'px';
+				editor.style.height = H + 'px';
+				editor.style.left = 0 + 'px';
+				editor.style.top = 0 + 'px';
+
+				preview.style.width = W/2 + 'px';
+				preview.style.height = H + 'px';
+				preview.style.left = W/2 + 'px';
+				preview.style.top = 0 + 'px';
+			}
+			resize();
+			onresize = resize;
+
+		</script>
+	</body>
+</html>
